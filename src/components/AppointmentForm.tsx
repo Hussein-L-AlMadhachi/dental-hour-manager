@@ -10,8 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 interface Patient {
   id: string;
   name: string;
-  totalHours: number;
-  usedHours: number;
 }
 
 interface AppointmentFormProps {
@@ -46,9 +44,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     onScheduleAppointment(formData);
   };
 
-  const selectedPatient = patients.find(p => p.id === formData.patientId);
-  const remainingHours = selectedPatient ? selectedPatient.totalHours - selectedPatient.usedHours : 0;
-
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
@@ -73,7 +68,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
                   <SelectItem key={patient.id} value={patient.id}>
                     <div className="flex items-center gap-2">
                       <User className="h-4 w-4" />
-                      {patient.name} ({patient.totalHours - patient.usedHours}h remaining)
+                      {patient.name}
                     </div>
                   </SelectItem>
                 ))}
@@ -137,21 +132,6 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             />
           </div>
 
-          {selectedPatient && (
-            <div className="p-3 bg-blue-50 rounded-lg">
-              <div className="flex justify-between text-sm">
-                <span>Remaining Hours:</span>
-                <span className="font-bold text-blue-600">{remainingHours}h</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span>After Appointment:</span>
-                <span className={`font-bold ${remainingHours - formData.duration >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {remainingHours - formData.duration}h
-                </span>
-              </div>
-            </div>
-          )}
-
           <div className="flex gap-2 pt-4">
             <Button
               type="button"
@@ -164,7 +144,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
             <Button
               type="submit"
               className="flex-1 bg-blue-600 hover:bg-blue-700"
-              disabled={!formData.patientId || !formData.date || !formData.time || !formData.treatment || (selectedPatient && remainingHours - formData.duration < 0)}
+              disabled={!formData.patientId || !formData.date || !formData.time || !formData.treatment}
             >
               <Save className="h-4 w-4 mr-2" />
               Schedule

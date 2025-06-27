@@ -16,7 +16,7 @@ interface Appointment {
 
 interface AppointmentListProps {
   appointments: Appointment[];
-  onDeleteAppointment: (id: string, duration: number, patientId: string) => void;
+  onDeleteAppointment: (id: string, patientId: string) => void;
 }
 
 const AppointmentList: React.FC<AppointmentListProps> = ({ appointments, onDeleteAppointment }) => {
@@ -83,7 +83,7 @@ const AppointmentList: React.FC<AppointmentListProps> = ({ appointments, onDelet
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => onDeleteAppointment(appointment.id, appointment.duration, appointment.patientId)}
+                onClick={() => onDeleteAppointment(appointment.id, appointment.patientId)}
                 className="text-red-600 hover:text-red-700 hover:bg-red-50"
               >
                 <Trash2 className="h-4 w-4" />

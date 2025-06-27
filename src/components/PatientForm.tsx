@@ -9,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 interface PatientFormProps {
   onAddPatient: (patient: {
     name: string;
-    totalHours: number;
     phone: string;
     email: string;
   }) => void;
@@ -19,7 +18,6 @@ interface PatientFormProps {
 const PatientForm: React.FC<PatientFormProps> = ({ onAddPatient, onCancel }) => {
   const [formData, setFormData] = useState({
     name: '',
-    totalHours: 10,
     phone: '',
     email: ''
   });
@@ -27,7 +25,7 @@ const PatientForm: React.FC<PatientFormProps> = ({ onAddPatient, onCancel }) => 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAddPatient(formData);
-    setFormData({ name: '', totalHours: 10, phone: '', email: '' });
+    setFormData({ name: '', phone: '', email: '' });
   };
 
   return (
@@ -47,19 +45,6 @@ const PatientForm: React.FC<PatientFormProps> = ({ onAddPatient, onCancel }) => 
               placeholder="Enter patient name"
               value={formData.name}
               onChange={(e) => setFormData({...formData, name: e.target.value})}
-              required
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="totalHours">Total Hours Allocated</Label>
-            <Input
-              id="totalHours"
-              type="number"
-              min="1"
-              max="100"
-              value={formData.totalHours}
-              onChange={(e) => setFormData({...formData, totalHours: parseInt(e.target.value) || 0})}
               required
             />
           </div>
